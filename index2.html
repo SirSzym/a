@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        td{
+            /* cursor: pointer;
+            user-select: none; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gameBoardPlace"></div>
+
+
+    <script>
+        let x = []
+        let o = []
+
+        let players = ['o', 'x']
+        let lastmove = ''
+
+        function checkIfIndexIArray(index, arr) {
+            for (let el of arr){
+                if (el == index){
+                    return true
+                }
+            }
+                
+
+        }
+
+
+
+        function renderTableWithPics() {
+            document.getElementById('gameBoardPlace').innerHTML = ''
+            //3x3 -> x , y
+            let table = document.createElement('table')
+
+            for (let i = 0; i < 3; i++) {
+                let row = document.createElement('tr')
+                for (let j = 0; j < 3; j++) {
+                    let cell = document.createElement('td')
+                    if (checkIfIndexIArray(i * 3 + j, x)) {
+                        cell.innerHTML = 'x'
+                    } else if (checkIfIndexIArray(i * 3 + j, o)) {
+                        cell.innerHTML = 'o'
+                    } else {
+                        cell.innerText = 'none'
+                    }
+                    cell.onclick = function () {
+                        console.log("click", i*3+j)
+                        if (lastmove === '') {
+                            lastmove = 'o'
+                            o.push(i * 3 + j)
+                        } else if (lastmove === 'o') {
+                            lastmove = 'x'
+                            x.push(i * 3 + j)
+                        } else {
+                            lastmove = 'o'
+                            o.push(i * 3 + j)
+                        }
+                        renderTableWithPics()
+                    }
+                    row.appendChild(cell)
+                }
+                table.appendChild(row)
+            }
+            document.getElementById('gameBoardPlace').appendChild(table)
+        }
+        renderTableWithPics()
+    </script>
+</body>
+
+</html>
